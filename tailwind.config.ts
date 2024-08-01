@@ -19,10 +19,12 @@ const config: Config = {
       fontSize: {
         H1: "64px",
         "body-small": "14px",
+        "body-regular": "16px",
       },
       lineHeight: {
         H1: "80px",
         "body-small": "24px",
+        "body-regular": "24px",
       },
       backgroundColor: {
         Primary: "#2BD17E",
@@ -30,6 +32,10 @@ const config: Config = {
         Error: "#EB5757",
         Input: "#224957",
         Card: "#092C39",
+      },
+      colors: {
+        Input: "#224957",
+        Background: "#093545",
       },
     },
   },

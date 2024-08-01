@@ -1,3 +1,5 @@
+import Input from "@/components/Input";
+
 const Page = () => {
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -5,25 +7,27 @@ const Page = () => {
         <p className="text-center text-white mb-4 font-montserrat font-semibold text-H1">
           Sign in
         </p>
-        <input
-          type="text"
-          className="rounded-[10px] p-2 mb-3 max-w-xs bg-Input text-white placeholder:text-white font-montserrat font-normal w-[300px] h-[45px] text-body-small pl-4 focus:outline-none focus:border-transparent"
-          placeholder="Email"
+        <Input
+          id="emailInput"
+          label="Email"
+          placeholder="Enter your email"
+          type="email"
+          containerClass="mb-6"
         />
-        <input
+        <Input
+          id="passwordInput"
+          label="Password"
+          placeholder="Enter your email"
           type="password"
-          className="rounded-[10px] p-2 mb-3 max-w-xs bg-Input text-white placeholder:text-white font-montserrat font-normal w-[300px] h-[45px] text-body-small pl-4 focus:outline-none focus:border-transparent"
-          placeholder="Password"
+          containerClass="mb-5"
         />
         <div className="flex">
-          <input
-            type="checkbox"
-            name=""
-            id=""
-            className="appearance-none w-4 h-4 border border-gray-300 rounded-sm checked:bg-blue-600 checked:border-transparent focus:outline-none"
-          />
-          <p className="ml-2">Remember me</p>
+          <input type="checkbox" name="" id="" />
+          <p className="ml-2 font-montserrat text-body-small">Remember me</p>
         </div>
+        <button className="bg-Primary text-body-regular min-w-full h-[54px] rounded-xl font-montserrat hover:bg-green-600 mt-5">
+          Login
+        </button>
       </div>
     </div>
   );
