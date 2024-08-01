@@ -16,15 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={inter.className}
-        style={{
-          background: "#093545", //TODO: update with tailwind custom colors
-          color: "#fff", //TODO: update with tailwind custom colors
-        }}
-      >
-        {children}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
