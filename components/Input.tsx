@@ -13,6 +13,7 @@ interface InputProps {
     message: string;
     hasError: boolean;
   };
+  name?: string;
 }
 
 const Input: FC<InputProps> = ({
@@ -25,6 +26,7 @@ const Input: FC<InputProps> = ({
   onChange,
   containerClass,
   error,
+  name,
   ...props
 }) => {
   return (
@@ -40,6 +42,7 @@ const Input: FC<InputProps> = ({
           {...props}
           value={value}
           onChange={onChange}
+          name={name}
         />
         {label && (
           <label

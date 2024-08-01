@@ -1,8 +1,22 @@
+"use client";
+
+import { authenticate } from "@/app/lib/actions";
 import Input from "@/components/Input";
+import { useFormState } from "react-dom";
 
 const Page = () => {
+  // const [errorMessage, formAction, isPending] = useActionState(
+  //   authenticate,
+  //   undefined
+  // );
+
+  const [state, formAction] = useFormState(authenticate, undefined);
+
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <form
+      action={formAction}
+      className="flex items-center justify-center min-h-screen"
+    >
       <div className="flex flex-col items-center">
         <p className="text-center text-white mb-4 font-montserrat font-semibold text-H1">
           Sign in
@@ -13,6 +27,7 @@ const Page = () => {
           placeholder="Enter your email"
           type="email"
           containerClass="mb-6"
+          name="email"
         />
         <Input
           id="passwordInput"
@@ -20,6 +35,7 @@ const Page = () => {
           placeholder="Enter your email"
           type="password"
           containerClass="mb-5"
+          name="password"
         />
         <div className="flex">
           <input type="checkbox" name="" id="" />
@@ -29,7 +45,7 @@ const Page = () => {
           Login
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 
