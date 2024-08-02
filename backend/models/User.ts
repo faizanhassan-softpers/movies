@@ -1,27 +1,48 @@
-import mongoose, { Document, Model, Schema } from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-interface IUser extends Document {
+export interface IUser extends Document {
   email: string;
   password: string;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 const UserSchema: Schema<IUser> = new Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+}, {
+  timestamps: true,
 });
 
-UserSchema.pre<IUser>('save', async function (next) {
-  if (!this.isModified('password')) return next();
+// Hash the password before saving the user
+UserSchema.pre('save', async function (next) {
+  const user = this as IUser;
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(this.password, salt);
-  this.password = hashedPassword;
-  next();
+  if (!user.isModified('password')) {
+    return next(); // Password hasn't been changed, no need to hash
+  }
+
+  try {
+    // Generate a salt and hash the password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+    next();
+  } catch (error) {
+    next(error as Error);
+  }
 });
 
-UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+// Method to compare a candidate password with the hashed password
+UserSchema.methods.comparePassword = async function (candidatePassword: string) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
