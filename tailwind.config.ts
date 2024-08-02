@@ -18,11 +18,13 @@ const config: Config = {
       },
       fontSize: {
         H1: "64px",
+        H2: "48px",
         "body-small": "14px",
         "body-regular": "16px",
       },
       lineHeight: {
         H1: "80px",
+        H2: "56px",
         "body-small": "24px",
         "body-regular": "24px",
       },
