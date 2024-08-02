@@ -36,7 +36,14 @@ const Page = () => {
           <input type="checkbox" name="" id="" />
           <p className="ml-2 font-montserrat text-body-small">Remember me</p>
         </div>
-        <button className="bg-Primary text-body-regular min-w-full h-[54px] rounded-xl font-montserrat hover:bg-green-600 mt-5">
+        <button
+          onClick={(e) => {
+            setTimeout(() => {
+              location.reload();
+            }, 100);
+          }}
+          className="bg-Primary text-body-regular min-w-full h-[54px] rounded-xl font-montserrat hover:bg-green-600 mt-5"
+        >
           Login
         </button>
       </div>
