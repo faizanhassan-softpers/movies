@@ -3,7 +3,7 @@ import Image from "next/image";
 const page = () => {
   return (
     <div className="mt-[120px] ml-[120px] font-semibold">
-      <p className="text-H2 font-montserrat">Create a new movie </p>
+      <p className="text-H2 font-montserrat">Edit</p>
       <div className="flex flex-row mt-20">
         <div className="h-[504px] w-[473px] border-2 rounded-md border-dotted border-white border-1 bg-Input">
           <div className="flex flex-col h-full justify-center items-center">
@@ -17,7 +17,7 @@ const page = () => {
               priority
             />
             <p className="font-montserrat font-normal mt-5">
-              Drop an image here
+              Drop other image here
             </p>
           </div>
         </div>
@@ -39,7 +39,7 @@ const page = () => {
               Cancel
             </button>
             <button className="bg-Primary text-body-regular w-1/2 h-[54px] rounded-xl font-montserrat hover:bg-green-600 mt-5 font-bold">
-              Submit
+              Update
             </button>
           </div>
         </div>
