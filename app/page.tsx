@@ -5,17 +5,12 @@ import Input from "@/components/Input";
 import { useFormState } from "react-dom";
 
 const Page = () => {
-  // const [errorMessage, formAction, isPending] = useActionState(
-  //   authenticate,
-  //   undefined
-  // );
-
   const [state, formAction] = useFormState(authenticate, undefined);
 
   return (
     <form
       action={formAction}
-      className="flex items-center justify-center min-h-screen"
+      className="flex flex-col items-center justify-center flex-1"
     >
       <div className="flex flex-col items-center">
         <p className="text-center text-white mb-4 font-montserrat font-semibold text-H1">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Image from "next/image";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,7 +17,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`  ${inter.className}`}>
+        <div className="flex flex-col min-h-screen justify-between">
+          {children}
+          <div
+            style={{
+              width: "100%",
+            }}
+          >
+            <Image
+              src="/svgs/footer-wave.svg"
+              alt="Footer SVG"
+              width={200}
+              height={50}
+              style={{
+                width: "100%",
+              }}
+            />
+          </div>
+        </div>
+      </body>
     </html>
   );
 }
