@@ -9,25 +9,21 @@ interface MovieCardProps {
 
 const MovieCard: FC<MovieCardProps> = (props): ReactElement => {
   return (
-    <div className="container bg-Card h-[504px] w-[282px] rounded-xl">
-      <div className="relative h-5/6 mx-2 top-2">
+    <div className="bg-Card h-auto w-full rounded-xl">
+      <div className="relative h-96 mx-2 mt-2">
         <Image
-          src=""
-          alt=""
+          src="https://www.figma.com/file/rsilPqu30TpPX7IOPqLPAf/image/71b726c9bdb04893d9269540ca86da074296255e"
+          alt="Movie Image"
           className="rounded-md"
           layout="fill"
           objectFit="cover"
-          fill={true}
-          {...props.movieImageProps}
         />
       </div>
-      <div className="relative mx-2 mt-5">
-        <p className="font-montserrat font-medium text-[20px]">
+      <div className="mx-2 my-5 ">
+        <p className="font-montserrat font-medium text-lg">
           {props.movieTitle}
         </p>
-        <p className="font-montserrat font-normal text-[14px]">
-          {props.movieYear}
-        </p>
+        <p className="font-montserrat font-normal text-sm">{props.movieYear}</p>
       </div>
     </div>
   );
