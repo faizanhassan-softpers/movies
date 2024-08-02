@@ -1,47 +1,51 @@
+"use client";
+
+import { authenticate } from "@/app/lib/actions";
+import Input from "@/components/Input";
+import { useFormState } from "react-dom";
+
 const Page = () => {
+  // const [errorMessage, formAction, isPending] = useActionState(
+  //   authenticate,
+  //   undefined
+  // );
+
+  const [state, formAction] = useFormState(authenticate, undefined);
+
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <form
+      action={formAction}
+      className="flex items-center justify-center min-h-screen"
+    >
       <div className="flex flex-col items-center">
-        <p
-          style={{
-            fontSize: "3rem",
-          }}
-          className="text-center text-white mb-4"
-        >
+        <p className="text-center text-white mb-4 font-montserrat font-semibold text-H1">
           Sign in
         </p>
-        <input
-          type="text"
-          className="rounded-[5px] p-2 mb-3 w-full max-w-xs"
-          style={{
-            background: "#224957", // TODO: update with Tailwind custom colors
-          }}
-          placeholder="Email"
+        <Input
+          id="emailInput"
+          label="Email"
+          placeholder="Enter your email"
+          type="email"
+          containerClass="mb-6"
+          name="email"
         />
-        <input
+        <Input
+          id="passwordInput"
+          label="Password"
+          placeholder="Enter your email"
           type="password"
-          className="rounded-[5px] p-2 mb-3 w-full max-w-xs"
-          style={{
-            background: "#224957", // TODO: update with Tailwind custom colors
-          }}
-          placeholder="Password"
+          containerClass="mb-5"
+          name="password"
         />
         <div className="flex">
-          <input
-            type="checkbox"
-            name=""
-            id=""
-            // className=""
-            // style={{
-            //   background: "#224957", // TODO: update with Tailwind custom colors
-            //   color: "#fff", // TODO: update with Tailwind custom colors
-            // }}
-            className="appearance-none w-4 h-4 border border-gray-300 rounded-sm checked:bg-blue-600 checked:border-transparent focus:outline-none"
-          />
-          <p className="ml-2">Remember me</p>
+          <input type="checkbox" name="" id="" />
+          <p className="ml-2 font-montserrat text-body-small">Remember me</p>
         </div>
+        <button className="bg-Primary text-body-regular min-w-full h-[54px] rounded-xl font-montserrat hover:bg-green-600 mt-5">
+          Login
+        </button>
       </div>
-    </div>
+    </form>
   );
 };
 
