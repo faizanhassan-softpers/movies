@@ -16,7 +16,7 @@ export default function Home() {
     <div>
       <div
         // Nav
-        className="flex mt-10 mx-10 justify-between"
+        className="flex mt-10 mx-[120px] justify-between"
       >
         <div className="flex flex-row justify-center items-center">
           <h1 className="text-H2 font-montserrat mr-2 font-bold">My movies</h1>
@@ -49,15 +49,20 @@ export default function Home() {
           </button>
         </form>
       </div>
-      <div className="mx-10">
-        <MovieCard
-          movieImageProps={{
-            src: "https://www.figma.com/file/rsilPqu30TpPX7IOPqLPAf/image/71b726c9bdb04893d9269540ca86da074296255e",
-            alt: "movie",
-          }}
-          movieTitle="Movie"
-          movieYear="2022"
-        />
+      <div className="mx-[120px] mt-10 grid grid-cols-4 gap-4">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map(() => {
+          // TODO: replace with db data */}
+          return (
+            <MovieCard
+              movieImageProps={{
+                src: "https://www.figma.com/file/rsilPqu30TpPX7IOPqLPAf/image/71b726c9bdb04893d9269540ca86da074296255e",
+                alt: "movie",
+              }}
+              movieTitle="Movie"
+              movieYear="2022"
+            />
+          );
+        })}
       </div>
     </div>
   );
