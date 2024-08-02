@@ -15,9 +15,9 @@ export default function Home() {
     );
 
   return (
-    <div className="px-4 lg:px-36 mb-20">
+    <div className="px-4 mb-20 lg:my-[100px] lg:mx-[120px]">
       {/* Nav */}
-      <div className="flex flex-col sm:flex-row sm:justify-between mt-10">
+      <div className="flex flex-col sm:flex-row sm:justify-between">
         <div className="flex items-center mb-4 sm:mb-0">
           <h1 className="text-H2 font-montserrat mr-2 font-bold">My movies</h1>
           <Image
