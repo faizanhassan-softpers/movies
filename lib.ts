@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -21,21 +22,28 @@ export async function decrypt(input: string): Promise<any> {
 }
 
 export async function login(formData: FormData) {
-  // Verify credentials && get the user
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const email = formData.get("email") || "";
+  let password = formData.get("password") || "";
 
-  if (!(email === "johndoe@yopmail.com" && password === "12345678")) {
-    // TODO : make it dynamic
+  const resoponse = await fetch(
+    `${process.env.BASE_URL}/api/users?email=${email}`,
+    {
+      cache: "no-store",
+    }
+  );
+  const user = await resoponse.json();
+
+  const passwordCompare = await bcrypt.compare(
+    password as string,
+    user.password
+  );
+
+  if (!(email === email && passwordCompare)) {
     return {
-      error: "Invalid credentials",
+      error: true,
+      message: "Invalid email or password",
     };
   }
-
-  const user = {
-    _id: "65819260b0cfe3d5aaded818",
-    email: formData.get("email"),
-  };
 
   // Create the session
   const expires = new Date(Date.now() + 10 * 60 * 1000);
@@ -43,6 +51,10 @@ export async function login(formData: FormData) {
 
   // Save the session in a cookie
   cookies().set("session", session, { expires, httpOnly: true });
+  return {
+    error: false,
+    message: "Logged in successfully",
+  };
 }
 
 export async function logout() {
