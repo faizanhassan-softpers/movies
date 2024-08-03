@@ -1,6 +1,7 @@
-import { signOut } from "@/auth";
 import MovieCard from "@/components/MovieCard";
+import { logout } from "@/lib";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   const movie = true; //TODO: update with db
@@ -32,7 +33,8 @@ export default function Home() {
           className="flex items-center cursor-pointer hover:text-slate-400"
           action={async () => {
             "use server";
-            await signOut();
+            await logout();
+            redirect("/login");
           }}
         >
           <button className="flex items-center">
