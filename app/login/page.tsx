@@ -8,8 +8,9 @@ const Page = () => {
       action={async (formData) => {
         "use server";
         const response = await login(formData);
-        console.log("Login response: ", response); // TODO: remove
-        redirect("/dashboard");
+        if (!response.error) {
+          redirect("/dashboard");
+        }
       }}
       className="flex flex-col items-center justify-center flex-1"
     >
