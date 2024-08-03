@@ -25,7 +25,7 @@ export async function login(formData: FormData) {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  if (!(email === "fh@gmail.com" && password === "123")) {
+  if (!(email === "admin@admin.com" && password === "admin")) {
     // TODO : make it dynamic
     return {
       error: "Invalid credentials",
