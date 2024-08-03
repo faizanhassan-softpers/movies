@@ -25,14 +25,17 @@ export async function login(formData: FormData) {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  if (!(email === "admin@admin.com" && password === "admin")) {
+  if (!(email === "johndoe@yopmail.com" && password === "12345678")) {
     // TODO : make it dynamic
     return {
       error: "Invalid credentials",
     };
   }
 
-  const user = { email: formData.get("email"), name: "John" };
+  const user = {
+    _id: "65819260b0cfe3d5aaded818",
+    email: formData.get("email"),
+  };
 
   // Create the session
   const expires = new Date(Date.now() + 10 * 60 * 1000);
