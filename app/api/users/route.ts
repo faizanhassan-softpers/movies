@@ -2,12 +2,12 @@ import { connectToDatabase } from "@/backend/lib/dbConnect";
 import User from "@/backend/models/User";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: any) {
   try {
     await connectToDatabase();
 
-    const email = "johndoe@yopmail.com";
-    const password = "12345678";
+    const url = new URL(request.url);
+    const email = url.searchParams.get("email");
 
     const user = await User.findOne({ email });
     if (!user) {
