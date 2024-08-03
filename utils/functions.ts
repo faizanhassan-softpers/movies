@@ -1,6 +1,11 @@
-export function getLoggedInUserId(): string | null {
+import { getSession } from "@/lib";
+
+export async function getLoggedInUserId(): Promise<string | null> {
     try {
-        const userId = '66ace8f9ed570f576b4a0087'; // Replace with real logic
+        const session = await getSession();
+        const user = session?.user;
+
+        const userId = user?._id;
 
         if (!userId) {
             throw new Error('User ID not found');
