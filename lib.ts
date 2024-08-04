@@ -1,3 +1,5 @@
+'use server';
+
 import bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
