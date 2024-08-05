@@ -10,17 +10,36 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [userMovies, setUserMovies] = useState([]);
+  const [pagination, setPagination] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true); // State for loading
+
+  const handlePageNumberClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const pageNumber = Number(event?.target.innerHTML);
+    if (pageNumber != currentPage) setCurrentPage(pageNumber);
+  }
+
+  const handlePrevClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  }
+
+  const handleNextClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    if (currentPage < pagination.totalPages) setCurrentPage(currentPage + 1);
+  }
 
   useEffect(() => {
     const fetchUserMovies = async () => {
       try {
         const loggedInUserId = await getLoggedInUserId();
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/movies?ownerId=${loggedInUserId}`;
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/movies?ownerId=${loggedInUserId}&limit=3&page=${currentPage}`;
         const response = await fetch(url);
         const data = await response.json();
 
         setUserMovies(data?.movies ?? []);
+        setPagination(data?.pagination ?? {});
       } catch (error) {
         console.log('Error fetching the data:', error);
       } finally {
@@ -29,7 +48,19 @@ export default function Home() {
     };
 
     fetchUserMovies();
-  }, []);
+  }, [currentPage]);
+
+  const paginationLinks = [];
+
+  for (let i = 1; i <= pagination.totalPages; i++) {
+    // Define the class names
+    let classes = 'relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white';
+    if (i === pagination.page) classes += ' bg-green-500';
+
+    // Add the link element to the array with dynamic classes and content
+    paginationLinks.push(<a key={i} href="#" className={classes} onClick={handlePageNumberClick}>{i}</a>);
+  }
+
 
   // Render a loading state while fetching data
   if (loading) {
@@ -101,15 +132,11 @@ export default function Home() {
       <div className="flex items-center justify-center p-5">
         <div>
           <nav className="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-            <a href="#" className="relative inline-flex items-center rounded-l-md px-3 py-1 text-white focus:z-20 focus:outline-offset-0">Prev</a>
-            <a href="#" aria-current="page" className="relative rounded z-10 inline-flex items-center bg-green-500 px-3 py-1 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">1</a>
-            <a href="#" className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0">2</a>
-            <a href="#" className="relative rounded hidden items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0 md:inline-flex">3</a>
-            <span className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white focus:outline-offset-0">...</span>
-            <a href="#" className="relative rounded hidden items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0 md:inline-flex">8</a>
-            <a href="#" className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0">9</a>
-            <a href="#" className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0">10</a>
-            <a href="#" className="relative rounded inline-flex items-center rounded-r-md px-3 py-1 text-white focus:z-20 focus:outline-offset-0">Next</a>
+            <a href="#" className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white" onClick={handlePrevClick}>Prev</a>
+
+            {paginationLinks}
+
+            <a href="#" className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white" onClick={handleNextClick}>Next</a>
           </nav>
         </div>
       </div>
