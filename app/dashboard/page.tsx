@@ -1,3 +1,5 @@
+'use client';
+
 import MovieCard from "@/components/MovieCard";
 import { logout } from "@/lib";
 import Image from "next/image";
@@ -35,7 +37,6 @@ export default function Home() {
         <form
           className="flex items-center cursor-pointer hover:text-slate-400"
           action={async () => {
-            "use server";
             await logout();
             redirect("/login");
           }}
