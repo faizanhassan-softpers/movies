@@ -2,6 +2,7 @@ import MovieCard from "@/components/MovieCard";
 import { logout } from "@/lib";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import Link from 'next/link';
 
 export default function Home() {
   const movie = true; //TODO: update with db
@@ -21,13 +22,15 @@ export default function Home() {
       <div className="flex flex-col sm:flex-row sm:justify-between">
         <div className="flex items-center mb-4 sm:mb-0">
           <h1 className="text-H2 font-montserrat mr-2 font-bold">My movies</h1>
-          <Image
-            src="/svgs/create.svg"
-            alt="Create Icon"
-            width={30}
-            height={30}
-            priority
-          />
+          <Link href="/dashboard/create" passHref>
+            <Image
+              src="/svgs/create.svg"
+              alt="Create Icon"
+              width={30}
+              height={30}
+              priority
+            />
+          </Link>
         </div>
         <form
           className="flex items-center cursor-pointer hover:text-slate-400"
