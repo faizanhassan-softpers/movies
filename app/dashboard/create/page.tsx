@@ -125,21 +125,6 @@ const Page = () => {
             </div>
           </div>
         )}
-        {/* <div className="h-64 w-full lg:w-[473px] lg:h-[504px] border-2 rounded-md border-dotted border-white bg-Input flex items-center justify-center">
-          <div className="flex flex-col items-center">
-            <input type="file" onChange={handleFileChange} />
-            <Image
-              src="/svgs/download.svg"
-              alt="Upload"
-              width={30}
-              height={37}
-              priority
-            />
-            <p className="font-montserrat font-normal mt-5 text-center">
-              Drop an image here
-            </p>
-          </div>
-        </div> */}
         <div className="flex flex-col mt-8 lg:mt-0 w-full lg:w-1/2 lg:ml-20">
           <input
             id="title"
@@ -152,7 +137,7 @@ const Page = () => {
           <input
             id="publishing-year"
             placeholder="Publishing year"
-            type="text"
+            type="number"
             className="rounded-lg bg-Input text-white font-montserrat font-normal w-full lg:max-w-[216px] h-12 text-body-small pl-4 focus:bg-white focus:outline-none focus:border-Background focus:text-Background placeholder:text-white placeholder:font-montserrat mt-4"
             value={publishingYear}
             onChange={handlePublishingYearChange}
