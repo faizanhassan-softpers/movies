@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 const Page = () => {
@@ -95,6 +96,7 @@ const Page = () => {
               body: JSON.stringify(createMovieData),
             }
           );
+          toast.success("Movies created successfully!");
           router.push("/dashboard");
         } else {
           console.log("====================================");
