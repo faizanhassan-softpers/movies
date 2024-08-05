@@ -5,10 +5,39 @@ import { logout } from "@/lib";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import Link from 'next/link';
+import { getLoggedInUserId } from "@/utils/functions";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const movie = true; //TODO: update with db
-  if (!movie)
+  const [userMovies, setUserMovies] = useState([]);
+  const [loading, setLoading] = useState(true); // State for loading
+
+  useEffect(() => {
+    const fetchUserMovies = async () => {
+      try {
+        const loggedInUserId = await getLoggedInUserId();
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/movies?ownerId=${loggedInUserId}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        setUserMovies(data?.movies ?? []);
+      } catch (error) {
+        console.log('Error fetching the data:', error);
+      } finally {
+        setLoading(false); // Set loading to false once the fetch is complete
+      }
+    };
+
+    fetchUserMovies();
+  }, []);
+
+  // Render a loading state while fetching data
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // If no movies found or condition for empty state
+  if (userMovies.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen text-H2 font-montserrat px-4">
         Your movie list is empty
@@ -17,6 +46,7 @@ export default function Home() {
         </button>
       </div>
     );
+  }
 
   return (
     <div className="px-4 mb-20 lg:my-[100px] lg:mx-[120px]">
@@ -54,19 +84,17 @@ export default function Home() {
         </form>
       </div>
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((_, index) => {
-          // TODO: replace with db data
-          return (
-            <MovieCard
-              movieImageProps={{
-                src: "https://www.figma.com/file/rsilPqu30TpPX7IOPqLPAf/image/71b726c9bdb04893d9269540ca86da074296255e",
-                alt: "movie",
-              }}
-              movieTitle="Movie"
-              movieYear="2022"
-            />
-          );
-        })}
+        {userMovies.map((movie, index) => (
+          <MovieCard
+            key={index}
+            movieImageProps={{
+              src: movie.imageUrl || "https://via.placeholder.com/150",
+              alt: movie.title || "movie",
+            }}
+            movieTitle={movie.title || "Movie"}
+            movieYear={movie.publishingYear || "2022"}
+          />
+        ))}
       </div>
 
       {/* Pagination links */}
