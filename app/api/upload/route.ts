@@ -31,7 +31,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         return NextResponse.json({
             message: "File uploaded successfully",
-            path: filePath
+            path: `/uploads/${fileName}`
         });
     } catch (error) {
         console.error("Error recieving file:", error);
