@@ -64,6 +64,24 @@ export default function Home() {
           );
         })}
       </div>
+
+      {/* Pagination links */}
+      <div className="flex items-center justify-center p-5">
+        <div>
+          <nav className="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+            <a href="#" className="relative inline-flex items-center rounded-l-md px-3 py-1 text-white focus:z-20 focus:outline-offset-0">Prev</a>
+            <a href="#" aria-current="page" className="relative rounded z-10 inline-flex items-center bg-green-500 px-3 py-1 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">1</a>
+            <a href="#" className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0">2</a>
+            <a href="#" className="relative rounded hidden items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0 md:inline-flex">3</a>
+            <span className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white focus:outline-offset-0">...</span>
+            <a href="#" className="relative rounded hidden items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0 md:inline-flex">8</a>
+            <a href="#" className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0">9</a>
+            <a href="#" className="relative rounded inline-flex items-center px-3 py-1 text-sm font-semibold text-white focus:z-20 focus:outline-offset-0">10</a>
+            <a href="#" className="relative rounded inline-flex items-center rounded-r-md px-3 py-1 text-white focus:z-20 focus:outline-offset-0">Next</a>
+          </nav>
+        </div>
+      </div>
+
     </div>
   );
 }
