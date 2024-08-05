@@ -115,16 +115,17 @@ export default function Home() {
         </form>
       </div>
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {userMovies.map((movie, index) => (
-          <MovieCard
-            key={index}
-            movieImageProps={{
-              src: movie.imageUrl || "https://via.placeholder.com/150",
-              alt: movie.title || "movie",
-            }}
-            movieTitle={movie.title || "Movie"}
-            movieYear={movie.publishingYear || "2022"}
-          />
+        {userMovies.map((movie) => (
+          <Link href={`/dashboard/edit/${movie._id}`} passHref key={movie._id}>
+            <MovieCard
+              movieImageProps={{
+                src: movie.imageUrl || "https://via.placeholder.com/150",
+                alt: movie.title || "movie",
+              }}
+              movieTitle={movie.title || "Movie"}
+              movieYear={movie.publishingYear || "2022"}
+            />
+          </Link>
         ))}
       </div>
 
