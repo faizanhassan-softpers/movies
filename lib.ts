@@ -33,6 +33,13 @@ export async function login(formData: FormData) {
   );
   const user = await resoponse.json();
 
+  if (user.message) {
+    return {
+      error: true,
+      message: "Invalid email",
+    };
+  }
+
   const passwordCompare = await bcrypt.compare(
     password as string,
     user.password

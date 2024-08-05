@@ -1,17 +1,23 @@
+"use client";
+
 import Input from "@/components/Input";
-import { login } from "@/lib";
-import { redirect } from "next/navigation";
+import { useEffect } from "react";
+import { useFormState } from "react-dom";
+import { loginAction } from "../serverActions/loginAction";
 
 const Page = () => {
+  const [formState, setFormState] = useFormState(loginAction, {
+    error: false,
+    message: "",
+  });
+
+  useEffect(() => {
+    console.log("--- useFormSate", formState.message);
+  }, [formState]);
+
   return (
     <form
-      action={async (formData) => {
-        "use server";
-        const response = await login(formData);
-        if (!response.error) {
-          redirect("/dashboard");
-        }
-      }}
+      action={setFormState}
       className="flex flex-col items-center justify-center flex-1"
     >
       <div className="flex flex-col items-center">
@@ -34,13 +40,18 @@ const Page = () => {
           containerClass="mb-5"
           name="password"
         />
-        <div className="flex">
+        <div className="flex mb-5">
           <input type="checkbox" name="" id="" />
           <p className="ml-2 font-montserrat text-body-small">Remember me</p>
         </div>
-        <button className="bg-Primary text-body-regular min-w-full h-[54px] rounded-xl font-montserrat hover:bg-green-600 mt-5">
+        <button className="bg-Primary text-body-regular min-w-full h-[54px] rounded-xl font-montserrat hover:bg-green-600 ">
           Login
         </button>
+        {formState?.error && (
+          <p className="text-red-500 text-sm text-center mt-2">
+            {formState.message}
+          </p>
+        )}
       </div>
     </form>
   );
