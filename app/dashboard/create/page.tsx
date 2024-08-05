@@ -2,32 +2,37 @@
 
 import { getLoggedInUserId } from "@/utils/functions";
 import Image from "next/image";
-import { redirect } from "next/navigation";
-import { useRouter } from "next/router";
 import { useState } from 'react';
 
 const Page = () => {
-  const router = useRouter();
-
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [title, setTitle] = useState('');
-  const [publishingYear, setPublishingYear] = useState('');
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [title, setTitle] = useState("");
+  const [publishingYear, setPublishingYear] = useState("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target.files?.[0] || null;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewImage(reader.result as string);
+    };
+    reader.readAsDataURL(file as any);
+
     setSelectedFile(file);
-  }
+  };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
-  }
+  };
 
-  const handlePublishingYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePublishingYearChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPublishingYear(event.target.value);
-  }
+  };
 
   const handleSubmit = async () => {
-    if (selectedFile !== null && title !== '' && publishingYear !== '') {
+    if (selectedFile !== null && title !== "" && publishingYear !== "") {
       try {
         // Upload the file and get the path
         const arrayBuffer = await selectedFile?.arrayBuffer();
@@ -35,12 +40,13 @@ const Page = () => {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/upload`,
           {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Content-Type': 'application/octect-stream',
+              "Content-Type": "application/octect-stream",
             },
-            body: arrayBuffer
-          });
+            body: arrayBuffer,
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -52,36 +58,74 @@ const Page = () => {
             owner,
             title,
             publishingYear: Number(publishingYear),
-            imageUrl
+            imageUrl,
           };
 
           const result = await fetch(
             `${process.env.NEXT_PUBLIC_BASE_URL}/api/movies`,
             {
-              method: 'POST',
+              method: "POST",
               headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
               },
-              body: JSON.stringify(createMovieData)
-            });
+              body: JSON.stringify(createMovieData),
+            }
+          );
         } else {
-          console.log('====================================');
-          console.log('Error uploading the image');
-          console.log('====================================');
+          console.log("====================================");
+          console.log("Error uploading the image");
+          console.log("====================================");
         }
       } catch (error) {
-        console.log('====================================');
-        console.log('Error: ', error);
-        console.log('====================================');
+        console.log("====================================");
+        console.log("Error: ", error);
+        console.log("====================================");
       }
     }
-  }
+  };
 
   return (
     <div className="mt-6 md:mt-12 lg:mt-[120px] lg:ml-[120px] mx-4 md:mx-12 lg:mx-24  font-semibold">
       <p className="text-2xl lg:text-H2 font-montserrat">Create a new movie</p>
       <div className="flex flex-col lg:flex-row mt-10 lg:mt-20">
-        <div className="h-64 w-full lg:w-[473px] lg:h-[504px] border-2 rounded-md border-dotted border-white bg-Input flex items-center justify-center">
+        {previewImage ? (
+          <div className="relative h-64 w-full lg:w-[473px] lg:h-[504px] rounded-md bg-Input flex items-center justify-center">
+            <Image
+              src={previewImage as any}
+              alt="Upload"
+              className="rounded-md"
+              layout="fill"
+              objectFit="cover"
+              priority
+            />
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className="absolute w-full h-full bg-red-900 opacity-0"
+            />
+          </div>
+        ) : (
+          <div className="h-64 w-full lg:w-[473px] lg:h-[504px] border-2 rounded-md border-dotted border-white bg-Input flex items-center justify-center">
+            <div className="relative flex flex-col items-center h-full w-full justify-center">
+              <input
+                type="file"
+                onChange={handleFileChange}
+                className="absolute w-full h-full bg-red-900 opacity-0"
+              />
+              <Image
+                src="/svgs/download.svg"
+                alt="Upload"
+                width={30}
+                height={37}
+                priority
+              />
+              <p className="font-montserrat font-normal mt-5 text-center">
+                Drop an image here
+              </p>
+            </div>
+          </div>
+        )}
+        {/* <div className="h-64 w-full lg:w-[473px] lg:h-[504px] border-2 rounded-md border-dotted border-white bg-Input flex items-center justify-center">
           <div className="flex flex-col items-center">
             <input type="file" onChange={handleFileChange} />
             <Image
@@ -95,7 +139,7 @@ const Page = () => {
               Drop an image here
             </p>
           </div>
-        </div>
+        </div> */}
         <div className="flex flex-col mt-8 lg:mt-0 w-full lg:w-1/2 lg:ml-20">
           <input
             id="title"
