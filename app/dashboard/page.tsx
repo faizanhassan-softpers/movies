@@ -34,7 +34,7 @@ export default function Home() {
     const fetchUserMovies = async () => {
       try {
         const loggedInUserId = await getLoggedInUserId();
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/movies?ownerId=${loggedInUserId}&limit=3&page=${currentPage}`;
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/movies?ownerId=${loggedInUserId}&limit=8&page=${currentPage}`;
         const response = await fetch(url);
         const data = await response.json();
 
