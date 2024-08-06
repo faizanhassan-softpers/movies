@@ -72,9 +72,13 @@ export default function Home() {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen text-H2 font-montserrat px-4">
         Your movie list is empty
-        <button className="bg-Primary text-body-regular rounded-xl hover:bg-green-600 mt-5 w-full max-w-xs h-11 text-sm font-montserrat">
+        <Link
+          href="/dashboard/create"
+          className="bg-Primary text-body-regular rounded-xl hover:bg-green-600 mt-5 w-full max-w-xs h-11 text-sm font-montserrat text-center flex items-center justify-center"
+          passHref
+        >
           Add a new Movie
-        </button>
+        </Link>
       </div>
     );
   }
